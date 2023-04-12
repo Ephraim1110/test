@@ -20,4 +20,4 @@ jobs:
     - name: Make PHP Code Sniffer executable
       run: chmod +x phpcs.phar
     - name: Run PHP Code Sniffer
-      run: ./phpcs.phar src --standard=PSR1,PSR12
+      run: ./phpcs.phar --standard=PSR1,PSR12
