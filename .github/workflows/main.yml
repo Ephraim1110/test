@@ -1,17 +1,20 @@
-name: PHP Code Sniffer
-on: [push]
+name: Composer Workflow # Nom de votre workflow
+on:
+  push: # Déclencheur qui s'active à chaque fois qu'un commit est poussé sur le référentiel
+    branches:
+      - main # Branche sur laquelle le workflow s'active
 jobs:
-  phpcs:
-    name: PHP Code Sniffer
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest # Spécifie l'environnement d'exécution pour votre job (dans cet exemple, Ubuntu)
     steps:
-      - uses: actions/checkout@v2
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          extensions: mbstring, zip
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction
-      - name: Run PHP Code Sniffer
-        run: vendor/bin/phpcs  --standard=PSR1,PSR12
+    - name: Checkout # Nom de l'étape
+      uses: actions/checkout@v2 # Action pour récupérer le code source du référentiel
+    - name: Set up PHP # Nom de l'étape
+      uses: shivammathur/setup-php@v2 # Action pour configurer PHP
+      with:
+        php-version: '7.4' # Version de PHP à utiliser
+        extensions: gd, mbstring # Extensions PHP à installer
+    - name: Install dependencies # Nom de l'étape
+      run: composer install --prefer-dist --no-progress --no-suggest # Commande pour installer les dépendances avec Composer
+    - name: Run tests # Nom de l'étape
+      run: phpunit # Commande pour exécuter les tests de votre application
